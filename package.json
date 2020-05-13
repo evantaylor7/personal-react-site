@@ -1,5 +1,6 @@
 {
   "name": "personal-react-site",
+  "homepage" : "http://bookmark-books.surge.sh/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
