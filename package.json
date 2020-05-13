@@ -41,7 +41,7 @@
   },
   "git": { 
     "scripts": { 
-      "pre-push": "surge --project ./ --domain bookmark-books.surge.sh/" 
+      "pre-push": "surge --project ../personal-react-site --domain bookmark-books.surge.sh/" 
     } 
   }
 }
