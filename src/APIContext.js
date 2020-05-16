@@ -26,17 +26,24 @@ export default function APIContextProvider(props){
             .then(response => {
                 setInputs(prevInputs => ({
                     ...prevInputs,
-                    bookData: response.data.items
-                }))
-                setInputs(prevInputs => ({
-                    ...prevInputs,
+                    bookData: response.data.items,
                     lastPage: response.data.totalItems
                 }))
+                window.scrollTo(0, 0)
             })
     }, [search, genre, sort, page, apiKey])
 
     function searchChange(e){
         const value = e.target.value
+        localStorage.setItem("search", value)
+        setInputs(prevInputs => ({
+            ...prevInputs,
+            search: value,
+            page: 0
+        }))
+    }
+
+    function searchSubmit(value){
         localStorage.setItem("search", value)
         setInputs(prevInputs => ({
             ...prevInputs,
@@ -70,11 +77,8 @@ export default function APIContextProvider(props){
     }
 
     function handleRead(item){
-        const thisBook = inputs.read.find(book => book.id === item.id) 
-        if(thisBook){
-            alert("Already saved in 'read'!")
-        } else {
-            alert("Book saved in 'read'!")
+        const thisBook = inputs.read.find(book => book.id === item.id)
+        if(!thisBook){
             setInputs(prevInputs => ({
                 ...prevInputs,
                 read: [...prevInputs.read, item]
@@ -83,11 +87,8 @@ export default function APIContextProvider(props){
     }
 
     function handleUnread(item){
-        const thisBook = inputs.unread.find(book => book.id === item.id) 
-        if(thisBook){
-            alert("Already saved in 'want to read'!")
-        } else {
-            alert("Book saved in 'want to read'!")
+        const thisBook = inputs.unread.find(book => book.id === item.id)
+        if(!thisBook){
             setInputs(prevInputs => ({
                 ...prevInputs,
                 unread: [...prevInputs.unread, item]
@@ -121,6 +122,7 @@ export default function APIContextProvider(props){
             {{
             ...inputs,
             searchChange, 
+            searchSubmit,
             genreChange, 
             sortChange, 
             handlePageChange, 
